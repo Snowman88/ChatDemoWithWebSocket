@@ -40,7 +40,6 @@ public class MainActivity extends Activity {
 		
 		
 		/**
-		 * ListView‚ÉŒ‹‰Ê‚ð“WŠJ
 		 * •¶Žš‰»‚¯
 		 * Browser•\Ž¦
 		 */

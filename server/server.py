@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 from tornado import web, websocket, ioloop
 import json
 from tornado.options import options
@@ -18,7 +19,7 @@ class SocketHandler(websocket.WebSocketHandler):
 
     def on_message(self, message):
         data = {"message": message}
-        data = json.dumps(data)
+        data = json.dumps(data, ensure_ascii=False)
         for c in cl:
             c.write_message(data)
 
