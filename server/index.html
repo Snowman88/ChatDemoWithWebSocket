@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>ChatDemo</title>
+</head>
+<body>
+    <h1>WebSocketChatDemo On Your Browser</h1>
+    <p id="status">Closed</p>
+    <input type="text" width="300" height="300" id="message" />
+    <button id="send">Send</button>
+    <h3>Message List</h3>
+    <ul id="messageList">
+    </ul>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+    $(function(){
+        var ws = new WebSocket("ws://"+ window.location.host + "/ws");
+        var $message = $('#message');
+        var $status = $('#status');
+        var $messageList = $('#messageList');
+        ws.onopen = function(){
+            $status.text("Opend");
+        };
+
+        ws.onmessage = function(ev){
+            $status.hide().fadeIn("slow").text("received message");
+
+            var json = JSON.parse(ev.data);
+            $messageList.prepend($('<li>').text(json.message));
+
+        };
+
+        ws.onclose = function(ev){
+            $status.hide().fadeIn('slow').text("Closed");
+        };
+        ws.onerror = function(ev){
+            $status.hide().fadeIn("slow").text("Error");
+        };
+
+        $('#send').click(function(){
+            ws.send($message.val());
+            $message.val("");
+        });
+    });
+</script>
+</body>
+</html>

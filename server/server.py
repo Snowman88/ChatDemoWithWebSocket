@@ -7,6 +7,10 @@ options.define("port", default=8888, type=int)
 
 cl = []
 
+class IndexHandler(web.RequestHandler):
+    def get(self):
+        self.render("index.html");
+
 class SocketHandler(websocket.WebSocketHandler):
     def open(self):
         if self not in cl:
@@ -24,6 +28,7 @@ class SocketHandler(websocket.WebSocketHandler):
             c.write_message(data)
 
 app = web.Application([
+    (r"/", IndexHandler),
     (r"/ws", SocketHandler),
 ])
 

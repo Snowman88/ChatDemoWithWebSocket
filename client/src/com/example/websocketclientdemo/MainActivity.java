@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -168,9 +171,18 @@ public class MainActivity extends Activity {
 				public void run() {
 					Toast.makeText(getApplicationContext(), "----onMessage" + message.getText(),
 							Toast.LENGTH_SHORT).show();
-					// Use better one! Å´ I like the first one!
-					adapter.insert(message.getText(), 0);
-//					adapter.add(message.getText());
+					
+					JSONObject result = null;
+					try {
+						result = new JSONObject(message.getText());
+						// Use better one! Å´ I like the first one!
+						adapter.insert(result.getString("message"), 0);
+//						adapter.add(message.getText());
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 				}
 			});
 		}
